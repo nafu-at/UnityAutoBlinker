@@ -37,10 +37,11 @@ public class Blinker : MonoBehaviour
             // Close
             var value = 0f;
             var closeSpeed = closeTime / 100f; // ブレンドシェイプの値を１操作するために必要な時間
+
             while (true)
             {
                 value += Time.deltaTime / closeSpeed;
-                if (value >= 1f)
+                if (value >= 100f)
                     break;
 
                 if (leftEyeBlinkIndex > -1)
@@ -64,7 +65,7 @@ public class Blinker : MonoBehaviour
             while (true)
             {
                 value -= Time.deltaTime / openSpeed;
-                if (value < 0)
+                if (value < 0f)
                     break;
 
                 if (leftEyeBlinkIndex > -1)
