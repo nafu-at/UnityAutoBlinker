@@ -17,6 +17,7 @@ public class BlinkerCustomEditor : Editor
     {
         serializedObject.Update();
 
+        Undo.RecordObject(target, "Changed Blinker Parameter");
         if (EditorGUILayout.Foldout(true, "Skinned Mesh Renderer"))
         {
             ++EditorGUI.indentLevel;
@@ -39,9 +40,6 @@ public class BlinkerCustomEditor : Editor
         }
 
         serializedObject.ApplyModifiedProperties();
-
-        if (GUI.changed)
-            EditorUtility.SetDirty(target);
     }
 
     private string[] GetBlendShapeArray()
