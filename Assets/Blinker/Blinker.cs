@@ -19,11 +19,17 @@ public class Blinker : MonoBehaviour
     private Coroutine _coroutine;
     private void OnEnable()
     {
+        if (skinnedMeshRenderer == null)
+        {
+            Debug.LogWarning("Skinned Mesh Rendererが正しく設定されていません", gameObject);
+            return;
+        }
         _coroutine = StartCoroutine(Blink());
     }
     private void OnDisable()
     {
-        StopCoroutine(_coroutine);
+        if (_coroutine != null)
+            StopCoroutine(_coroutine);
     }
 
 
