@@ -5,15 +5,10 @@ using UnityEngine;
 
 namespace NafuSoft.AutoBlinker.Editor
 {
-    [CustomEditor(typeof(Blinker))]
-    public class BlinkerCustomEditor : UnityEditor.Editor
+    [CustomEditor(typeof(AutoBlinker))]
+    public class AutoBlinkerEditor : UnityEditor.Editor
     {
-        private Blinker _blinker;
-
-        private void OnEnable()
-        {
-            _blinker = target as Blinker;
-        }
+        private AutoBlinker Blinker => target as AutoBlinker;
 
         public override void OnInspectorGUI()
         {
@@ -23,10 +18,10 @@ namespace NafuSoft.AutoBlinker.Editor
             if (EditorGUILayout.Foldout(true, "Skinned Mesh Renderer"))
             {
                 ++EditorGUI.indentLevel;
-                _blinker.skinnedMeshRenderer = EditorGUILayout.ObjectField("Skinned Mesh Renderer", _blinker.skinnedMeshRenderer, typeof(SkinnedMeshRenderer), true) as SkinnedMeshRenderer;
+                Blinker.skinnedMeshRenderer = EditorGUILayout.ObjectField("Skinned Mesh Renderer", Blinker.skinnedMeshRenderer, typeof(SkinnedMeshRenderer), true) as SkinnedMeshRenderer;
 
-                _blinker.leftEyeBlinkIndex = EditorGUILayout.Popup("Left Eye BlinkShape", _blinker.leftEyeBlinkIndex + 1, GetBlendShapeArray()) - 1;
-                _blinker.rightEyeBlinkIndex = EditorGUILayout.Popup("Right Eye BlinkShape", _blinker.rightEyeBlinkIndex + 1, GetBlendShapeArray()) - 1;
+                Blinker.leftEyeBlinkIndex = EditorGUILayout.Popup("Left Eye BlinkShape", Blinker.leftEyeBlinkIndex + 1, GetBlendShapeArray()) - 1;
+                Blinker.rightEyeBlinkIndex = EditorGUILayout.Popup("Right Eye BlinkShape", Blinker.rightEyeBlinkIndex + 1, GetBlendShapeArray()) - 1;
                 EditorGUILayout.HelpBox("まばたき用のブレンドシェイプが用意されている場合は片方のみに設定することで動作します", MessageType.Info);
                 --EditorGUI.indentLevel;
             }
@@ -34,10 +29,10 @@ namespace NafuSoft.AutoBlinker.Editor
             if (EditorGUILayout.Foldout(true, "Time Settings"))
             {
                 ++EditorGUI.indentLevel;
-                _blinker.interval = EditorGUILayout.FloatField("Interval", _blinker.interval);
-                _blinker.closeTime = EditorGUILayout.FloatField("Close Time", _blinker.closeTime);
-                _blinker.closingTime = EditorGUILayout.FloatField("Closing Time", _blinker.closingTime);
-                _blinker.openingTime = EditorGUILayout.FloatField("Opening Time", _blinker.openingTime);
+                Blinker.interval = EditorGUILayout.FloatField("Interval", Blinker.interval);
+                Blinker.closeTime = EditorGUILayout.FloatField("Close Time", Blinker.closeTime);
+                Blinker.closingTime = EditorGUILayout.FloatField("Closing Time", Blinker.closingTime);
+                Blinker.openingTime = EditorGUILayout.FloatField("Opening Time", Blinker.openingTime);
                 --EditorGUI.indentLevel;
             }
 
@@ -46,10 +41,10 @@ namespace NafuSoft.AutoBlinker.Editor
 
         private string[] GetBlendShapeArray()
         {
-            if (_blinker.skinnedMeshRenderer == null)
+            if (Blinker.skinnedMeshRenderer == null)
                 return Array.Empty<string>();
 
-            var mesh = _blinker.skinnedMeshRenderer.sharedMesh;
+            var mesh = Blinker.skinnedMeshRenderer.sharedMesh;
             var shapes = new List<string>
             {
                 "None"

@@ -6,7 +6,7 @@ namespace NafuSoft.AutoBlinker
     /// <summary>
     ///     BlendShapeを用いてランダムに瞬きをさせるためのスクリプトです。
     /// </summary>
-    public class Blinker : MonoBehaviour
+    public class AutoBlinker : MonoBehaviour
     {
         [SerializeField] public SkinnedMeshRenderer skinnedMeshRenderer;
 
