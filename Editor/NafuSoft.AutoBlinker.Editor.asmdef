@@ -1,0 +1,18 @@
+{
+    "name": "NafuSoft.AutoBlinker.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:3a21a634e00c5ae4d80c99c13938f9bd"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

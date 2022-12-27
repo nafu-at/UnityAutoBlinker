@@ -1,0 +1,12 @@
+{
+    "name": "dev.nafusoft.autoblinker",
+    "version": "1.0.3",
+    "displayName": "UnityAutoBlinker",
+    "description": "Blink models of any type with blendshapes.",
+    "author": {
+        "name": "Nafu Satsuki",
+        "email": "satsuki@nafusoft.dev",
+        "url": "https://nafusoft.dev/"
+    },
+    "lisence": "MIT"
+}
