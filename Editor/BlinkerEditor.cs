@@ -3,62 +3,65 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(Blinker))]
-public class BlinkerCustomEditor : Editor
+namespace NafuSoft.AutoBlinker.Editor
 {
-    private Blinker blinker;
-
-    private void OnEnable()
+    [CustomEditor(typeof(Blinker))]
+    public class BlinkerCustomEditor : UnityEditor.Editor
     {
-        blinker = target as Blinker;
-    }
+        private Blinker _blinker;
 
-    public override void OnInspectorGUI()
-    {
-        serializedObject.Update();
-
-        Undo.RecordObject(target, "Changed Blinker Parameter");
-        if (EditorGUILayout.Foldout(true, "Skinned Mesh Renderer"))
+        private void OnEnable()
         {
-            ++EditorGUI.indentLevel;
-            blinker.skinnedMeshRenderer = EditorGUILayout.ObjectField("Skinned Mesh Renderer", blinker.skinnedMeshRenderer, typeof(SkinnedMeshRenderer), true) as SkinnedMeshRenderer;
-
-            blinker.leftEyeBlinkIndex = EditorGUILayout.Popup("Left Eye BlinkShape", blinker.leftEyeBlinkIndex + 1, GetBlendShapeArray()) - 1;
-            blinker.rightEyeBlinkIndex = EditorGUILayout.Popup("Right Eye BlinkShape", blinker.rightEyeBlinkIndex + 1, GetBlendShapeArray()) - 1;
-            EditorGUILayout.HelpBox("まばたき用のブレンドシェイプが用意されている場合は片方のみに設定することで動作します", MessageType.Info);
-            --EditorGUI.indentLevel;
+            _blinker = target as Blinker;
         }
 
-        if (EditorGUILayout.Foldout(true, "Time Settings"))
+        public override void OnInspectorGUI()
         {
-            ++EditorGUI.indentLevel;
-            blinker.interval = EditorGUILayout.FloatField("Interval", blinker.interval);
-            blinker.closingTime = EditorGUILayout.FloatField("Closing Time", blinker.closingTime);
-            blinker.openingTime = EditorGUILayout.FloatField("Opening Time", blinker.openingTime);
-            blinker.closeTime = EditorGUILayout.FloatField("Close Time", blinker.closeTime);
-            --EditorGUI.indentLevel;
+            serializedObject.Update();
+
+            Undo.RecordObject(target, "Changed Blinker Parameter");
+            if (EditorGUILayout.Foldout(true, "Skinned Mesh Renderer"))
+            {
+                ++EditorGUI.indentLevel;
+                _blinker.skinnedMeshRenderer = EditorGUILayout.ObjectField("Skinned Mesh Renderer", _blinker.skinnedMeshRenderer, typeof(SkinnedMeshRenderer), true) as SkinnedMeshRenderer;
+
+                _blinker.leftEyeBlinkIndex = EditorGUILayout.Popup("Left Eye BlinkShape", _blinker.leftEyeBlinkIndex + 1, GetBlendShapeArray()) - 1;
+                _blinker.rightEyeBlinkIndex = EditorGUILayout.Popup("Right Eye BlinkShape", _blinker.rightEyeBlinkIndex + 1, GetBlendShapeArray()) - 1;
+                EditorGUILayout.HelpBox("まばたき用のブレンドシェイプが用意されている場合は片方のみに設定することで動作します", MessageType.Info);
+                --EditorGUI.indentLevel;
+            }
+
+            if (EditorGUILayout.Foldout(true, "Time Settings"))
+            {
+                ++EditorGUI.indentLevel;
+                _blinker.interval = EditorGUILayout.FloatField("Interval", _blinker.interval);
+                _blinker.closeTime = EditorGUILayout.FloatField("Close Time", _blinker.closeTime);
+                _blinker.closingTime = EditorGUILayout.FloatField("Closing Time", _blinker.closingTime);
+                _blinker.openingTime = EditorGUILayout.FloatField("Opening Time", _blinker.openingTime);
+                --EditorGUI.indentLevel;
+            }
+
+            serializedObject.ApplyModifiedProperties();
         }
 
-        serializedObject.ApplyModifiedProperties();
-    }
-
-    private string[] GetBlendShapeArray()
-    {
-        if (blinker.skinnedMeshRenderer == null)
-            return Array.Empty<string>();
-
-        var mesh = blinker.skinnedMeshRenderer.sharedMesh;
-        var names = new List<string>
+        private string[] GetBlendShapeArray()
         {
-            "None"
-        };
+            if (_blinker.skinnedMeshRenderer == null)
+                return Array.Empty<string>();
 
-        for (var i = 0; i < mesh.blendShapeCount; ++i)
-        {
-            var name = mesh.GetBlendShapeName(i);
-            names.Add(name);
+            var mesh = _blinker.skinnedMeshRenderer.sharedMesh;
+            var shapes = new List<string>
+            {
+                "None"
+            };
+
+            for (var i = 0; i < mesh.blendShapeCount; ++i)
+            {
+                var shapeName = mesh.GetBlendShapeName(i);
+                shapes.Add(shapeName);
+            }
+
+            return shapes.ToArray();
         }
-
-        return names.ToArray();
     }
 }
